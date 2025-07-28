@@ -36,3 +36,26 @@ class UserChangeForm(forms.ModelForm):
 
     def clean_password(self):
         return self.initial['password']
+    
+    
+class UserRegistrationForm(forms.Form):
+    phone = forms.CharField(max_length=11)
+    email = forms.EmailField()
+    full_name = forms.CharField(label='full name')
+    password = forms.CharField(widget=forms.PasswordInput)
+    
+    def clean_email(self):
+        email = self.cleaned_data['email'] 
+        user = User.objects.filter(email=email).exists()
+        if user:
+            raise ValueError(" This Email Already Exists")
+        
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        user = User.objects.filter(phone_number = phone)
+        if user:
+            raise ValueError(" This Phone Exists. Im Sorry")
+        return phone
+    
+class VerifyCodeForm(forms.Form):
+    code = forms.IntegerField()

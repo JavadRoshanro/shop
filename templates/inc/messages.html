@@ -1,19 +1,14 @@
 {% if messages %}
   {% for message in messages %}
-    <div class="px-4 py-3 mb-4 text-white rounded alert 
-         {% if message.tags == 'success' %}bg-green-500
-         {% elif message.tags == 'error' %}bg-red-500
-         {% elif message.tags == 'warning' %}bg-yellow-500
-         {% elif message.tags == 'info' %}bg-blue-500
-         {% else %}bg-gray-500
+    <div class="alert alert-dismissible fade show m-3 
+         {% if message.tags == 'success' %}alert-success
+         {% elif message.tags == 'error' %}alert-danger
+         {% elif message.tags == 'warning' %}alert-warning
+         {% elif message.tags == 'info' %}alert-info
+         {% else %}alert-secondary
          {% endif %}" role="alert">
-      <div class="flex justify-between">
-        <span>{{ message }}</span>
-        <button type="button" class="text-white hover:text-gray-200" 
-                data-bs-dismiss="alert" aria-label="Close">
-          ×
-        </button>
-      </div>
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   {% endfor %}
 {% endif %}
