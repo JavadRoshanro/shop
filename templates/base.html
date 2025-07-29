@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fa">
 <head>
@@ -8,30 +9,22 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <!-- Bootstrap 5 JS (for mobile menu toggle) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
- 
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/base_styles.css' %}">
+    {% block extra_headers %} {% endblock %}
 </head>
 
 <body>
     {% include 'inc/navbar.html' %}
-    <!-- نمایش پیام‌ها -->
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-dismissible fade show m-3 
-             {% if message.tags == 'success' %}alert-success
-             {% elif message.tags == 'error' %}alert-danger
-             {% elif message.tags == 'warning' %}alert-warning
-             {% elif message.tags == 'info' %}alert-info
-             {% else %}alert-secondary
-             {% endif %}" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      {% endfor %}
-    {% endif %}
+        <!-- نمایش پیام‌ها -->
+    {% include 'inc/messages.html' %}
+
+    
 <div class=mt-2>
-{% block content %} {% endblock %}
+  <h3> This Text For Base Page  </h3>
+{% block content %}   {% endblock %}
 </div>
 
 </body>

@@ -5,3 +5,10 @@ class HomeView(View):
     template_name = "base.html"
     def get(self, request):
         return render(request, self.template_name)
+
+
+class ViewIndex(View):
+    template_name = "home/index.html"
+    def get(self, request):
+        title = {}
+        return render(request, self.template_name, {'title': title})
