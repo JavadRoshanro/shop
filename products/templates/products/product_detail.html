@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-4 mb-4">
+      <div class="card h-100" style="width: 18rem;">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img-top">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text text-muted">{{ product.description|truncatewords:20 }}</p>
+          <p class="mt-auto fw-bold">Price: {{ product.price }} Toman</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
