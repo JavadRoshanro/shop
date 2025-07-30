@@ -41,3 +41,4 @@ class ProductUploadViewList(View):
         return render(request, self.template_name, {'form': form})
 
 
+# salam
