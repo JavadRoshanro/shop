@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -136,8 +136,9 @@ AWS_S3_ENDPOINT_URL = 'https://s3.ir-thr-at1.arvanstorage.ir'
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGES_BUCKET_NAME}.s3.ir-thr-at1.arvanstorage.ir'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
+AWS_LOCAL_STORAGES = os.path.join(BASE_DIR, "aws")
 AWS_S3_ADDRESSING_STYLE = "virtual"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-AWS_LOCAL_STORAGES = f"{BASE_DIR}/'aws'/"
+
 
 

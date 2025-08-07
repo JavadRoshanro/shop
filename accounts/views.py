@@ -6,7 +6,9 @@ from utils import send_otp_code
 from .models import OtpCode, User
 from django.contrib import messages
 from utils import send_otp_code
-from .forms import VerifyCodeForm
+from .forms import VerifyCodeForm, UserLoginForm 
+
+
 class AccountView(View):
     template_name = "base.html"
     def get(self, request):
@@ -64,3 +66,24 @@ class UserRegistrationCodeView(View):
                 messages.error(request, "Code Not Correct!", 'danger')
                 return redirect("accounts:verify_code")
         return render(request, self.template_name, {'form': form})
+
+
+
+class UserLoginView(View):
+    form_class = UserLoginForm
+    template_name = 'accounts/login.html'
+    
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form})
+        
+    def post(self, request):
+        if self.form_class.is_valid():
+            messages.success(request, "You Login Perfect ... ", 'success')
+            return redirect("accounts:accounts")
+
+
+
+class UserLogoutView(View):
+    def get(self, request):
+        pass

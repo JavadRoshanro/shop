@@ -1,5 +1,6 @@
 from django.conf import settings
 from boto3.session import Session
+import os
 
 
 
@@ -26,10 +27,16 @@ class Bucket:
         self.conn.delete_object(Bucket=settings.AWS_STORAGES_BUCKET_NAME, Key=key)
         return True
         
-        
+
     def download_object(self, key):
-        with open(settings.AWS_LOCAL_STORAGES + key, 'wb') as f:
+        file_path = os.path.join(settings.AWS_LOCAL_STORAGES, key)
+
+        # ساخت دایرکتوری مقصد اگر وجود نداشته باشه
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        with open(file_path, 'wb') as f:
             self.conn.download_fileobj(settings.AWS_STORAGES_BUCKET_NAME, key, f)
+
        
     
 bucket = Bucket()

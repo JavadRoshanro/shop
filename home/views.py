@@ -37,6 +37,6 @@ class DownloadBucketObjectView(View):
     def get(self, request, key):
         tasks.download_object_task.delay(key)
         messages.success(request, "Your Download Perfect File ...", "info")
-        return redirect("home:download_obj_bucket")
+        return redirect("home:bucket")
 
         
