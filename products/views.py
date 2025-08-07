@@ -1,12 +1,24 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .models import Product, Category
+from .models import Product, Category, generate_unique_slug
 from .forms import ProductForm
 from django.utils.text import slugify
-from storages.backends.s3boto3 import S3Boto3Storage
-from django.core.files.base import ContentFile
 from django.views import View
 
+for p in Product.objects.filter(slug=''):
+    p.slug = generate_unique_slug(p.name)
+    p.save()
+
+def generate_unique_slug(name):
+    base_slug = slugify(name)
+    slug = base_slug
+    counter = 1
+
+    while Product.objects.filter(slug=slug).exists():
+        slug = f"{base_slug}-{counter}"
+        counter += 1
+
+    return slug
 # Create your views here.
 
 class ProductsView(View):
@@ -21,7 +33,11 @@ class ProductDetailView(View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         return render(request, self.template_name, {'product': product})
-    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = generate_unique_slug(self.name)
+        super().save(*args, **kwargs)
+
     
 
 class ProductUploadViewList(View):
@@ -41,4 +57,3 @@ class ProductUploadViewList(View):
         return render(request, self.template_name, {'form': form})
 
 
-# salam
