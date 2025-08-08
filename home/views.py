@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from . import tasks
 from django.contrib import messages
+from utils import IsAdminUserMixin
 
 
 class HomeView(View):
@@ -18,7 +19,7 @@ class ViewIndex(View):
     
     
     
-class BucketHomeView(View):
+class BucketHomeView(IsAdminUserMixin, View):
     template_name="home/bucket.html"
     def get(self, request):
         objects = tasks.all_bucket_objects_task()
@@ -26,14 +27,14 @@ class BucketHomeView(View):
     
     
     
-class DeleteBucketObject(View):
+class DeleteBucketObject(IsAdminUserMixin, View):
     def get(self, request, key):
         tasks.delete_object_task.delay(key)
         messages.success(request, "Your Delete Object The Perfect ... ")
         return redirect("home:bucket")
     
     
-class DownloadBucketObjectView(View):
+class DownloadBucketObjectView(IsAdminUserMixin, View):
     def get(self, request, key):
         tasks.download_object_task.delay(key)
         messages.success(request, "Your Download Perfect File ...", "info")

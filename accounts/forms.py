@@ -63,5 +63,5 @@ class VerifyCodeForm(forms.Form):
     
     
 class UserLoginForm(forms.Form):
-    name = forms.CharField(max_length=15)
-    password = forms.CharField(max_length=20)
+    phone = forms.CharField(max_length=11)
+    password = forms.CharField(max_length=20, widget=forms.PasswordInput) 

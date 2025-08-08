@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserRegistrationForm
 import random
 from utils import send_otp_code
 from .models import OtpCode, User
 from django.contrib import messages
 from utils import send_otp_code
-from .forms import VerifyCodeForm, UserLoginForm 
-
+from .forms import VerifyCodeForm, UserRegistrationForm, UserLoginForm 
+from django.contrib.auth import login, logout, authenticate
 
 class AccountView(View):
     template_name = "base.html"
@@ -78,12 +77,21 @@ class UserLoginView(View):
         return render(request, self.template_name, {'form': form})
         
     def post(self, request):
-        if self.form_class.is_valid():
-            messages.success(request, "You Login Perfect ... ", 'success')
-            return redirect("accounts:accounts")
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request, phone_number=cd['phone'], password=cd['password'])
+            if user is not None:
+                login(request, user)
+                messages.success(request, "You Login Perfect ... ", 'success')
+                return redirect("home:home")
+            messages.error(request, "You Dont Login Im Sorry ...")
+        return render(request, self.template_name, {'form': form})
 
 
 
 class UserLogoutView(View):
     def get(self, request):
-        pass
+        logout(request)
+        messages.success(request, "Your Logout.", 'success')
+        return redirect("home:home")
