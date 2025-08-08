@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from .models import User
+from .models import OtpCode
 
 
 class UserCreateForm(forms.ModelForm):
@@ -55,6 +56,7 @@ class UserRegistrationForm(forms.Form):
         user = User.objects.filter(phone_number = phone)
         if user:
             raise ValueError(" This Phone Exists. Im Sorry")
+        OtpCode.objects.filter(phone_number=phone).delete()
         return phone
     
 class VerifyCodeForm(forms.Form):
