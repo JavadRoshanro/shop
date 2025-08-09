@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "home",
     "accounts",
-    "products",
     "storages",
     "django_celery_beat",
 ]
@@ -140,6 +139,5 @@ AWS_DEFAULT_ACL = None
 AWS_LOCAL_STORAGES = os.path.join(BASE_DIR, "aws")
 AWS_S3_ADDRESSING_STYLE = "virtual"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-
 
 

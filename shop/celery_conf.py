@@ -17,3 +17,4 @@ celery_app.conf.task_always_eager = False
 celery_app.conf.worker_prefetch_multiplier = 1
 celery_app.config_from_object('django.conf:settings', namespace='CELERY')
 celery_app.autodiscover_tasks()
+

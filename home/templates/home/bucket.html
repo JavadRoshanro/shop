@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+
+{% block content %}
 <div class="container">
   <table class="table">
     <thead>
@@ -12,19 +14,22 @@
     </thead>
     <tbody>
       {% for obj in objects %}
-<tr>
-  <th scope="row">{{ forloop.counter }}</th>
-  <td>{{ obj.Key }}</td>
-  <td>{{ obj.Size|filesizeformat }}</td>
-  <td>
-    <a href="{% url 'home:delete_obj_bucket' obj.Key|urlencode %}">Delete</a>
-  </td>
-  <td>
-    <a href="{% url 'home:download_obj_bucket' obj.Key|urlencode %}">Download</a>
-  </td>
-</tr>
-{% endfor %}
-
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ obj.Key }}</td>
+        <td>{{ obj.Size|filesizeformat }}</td>
+        <td>
+          <a href="{% url 'home:delete_obj_bucket' obj.Key|urlencode %}">Delete</a>
+        </td>
+        <td>
+          <a href="{% url 'home:download_obj_bucket' obj.Key|urlencode %}">Download</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="text-center">No objects found.</td>
+      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
